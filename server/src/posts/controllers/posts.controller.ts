@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, Query } from '@nestjs/common';
 import { PostsService } from '../services/posts.service';
 import { CreatePostDto, createPostSchema } from '../dto/create-post.dto';
 import { UpdatePostDto, updatePostSchema } from '../dto/update-post.dto';
 import { JoiValidationPipe } from 'src/pipes/validation.pipe';
+import { filterPostsDto, FilterPostsSchema } from '../dto/query-posts.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -15,8 +16,8 @@ export class PostsController {
   }
 
   @Get()
-  findAll() {
-    return this.postsService.findAll();
+  findAll(@Query(new JoiValidationPipe(FilterPostsSchema)) query: filterPostsDto) {
+    return this.postsService.findAll(query);
   }
 
   @Get(':id')

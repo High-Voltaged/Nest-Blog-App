@@ -1,7 +1,9 @@
 import { HttpCode, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { getPageParams } from 'src/utils/pagination';
 import { Repository } from 'typeorm';
 import { CreatePostDto } from '../dto/create-post.dto';
+import { filterPostsDto } from '../dto/query-posts.dto';
 import { UpdatePostDto } from '../dto/update-post.dto';
 import { Post } from '../entities/post.entity';
 
@@ -17,8 +19,11 @@ export class PostsService {
     return this.postsRepository.save(post);
   }
 
-  findAll() {
-    return this.postsRepository.find();
+  async findAll(filterPostsDto?: filterPostsDto) {
+    const { page, limit } = filterPostsDto;
+    const { skip, take } = getPageParams(page, limit);
+    const [posts, count] = await this.postsRepository.findAndCount({ skip, take });
+    return { posts, count };
   }
 
   async findOne(id: number) {
