@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes } from '@nestjs/common';
-import { PostsService } from './posts.service';
-import { CreatePostDto, createPostSchema } from './dto/create-post.dto';
-import { UpdatePostDto, updatePostSchema } from './dto/update-post.dto';
+import { PostsService } from '../services/posts.service';
+import { CreatePostDto, createPostSchema } from '../dto/create-post.dto';
+import { UpdatePostDto, updatePostSchema } from '../dto/update-post.dto';
 import { JoiValidationPipe } from 'src/pipes/validation.pipe';
 
 @Controller('posts')

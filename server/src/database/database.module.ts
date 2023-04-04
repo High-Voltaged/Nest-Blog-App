@@ -1,7 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Post } from 'src/posts/entities/post.entity';
 import config, { Environment } from '../config/server.config';
 
 @Global()
@@ -12,7 +11,7 @@ import config, { Environment } from '../config/server.config';
       useFactory: (configService: ConfigType<typeof config>) => ({
         type: 'postgres',
         url: configService.database.url,
-        entities: [Post],
+        autoLoadEntities: true,
         synchronize: configService.env === Environment.DEV,
       }),
     }),
