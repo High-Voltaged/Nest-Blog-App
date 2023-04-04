@@ -1,10 +1,11 @@
-import { transports, format as fmt, LoggerOptions } from 'winston';
+import { WinstonModuleOptions } from 'nest-winston';
+import { transports, format as fmt } from 'winston';
 
 const ConsoleTransport = new transports.Console({
   format: fmt.simple(),
 });
 
-const loggerOptions: LoggerOptions = {
+const loggerOptions: WinstonModuleOptions = {
   format: fmt.combine(
     fmt.errors({
       stack: true,
