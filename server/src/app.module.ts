@@ -7,24 +7,23 @@ import { AppService } from './app.service';
 import { PostsController } from './posts/posts.controller';
 import { PostsService } from './posts/posts.service';
 import loggerOptions from './config/logger.config';
-import databaseConfig from './config/server.config';
+import config, { Environment } from './config/server.config';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
     WinstonModule.forRoot(loggerOptions),
     ConfigModule.forRoot({
-      load: [databaseConfig],
+      load: [config],
+      isGlobal: true,
       validationSchema: Joi.object({
         PORT: Joi.number().default(3000),
-        DATABASE_HOST: Joi.string().default('localhost'),
-        DATABASE_PORT: Joi.number().required(),
-        DATABASE_USERNAME: Joi.string().required(),
-        DATABASE_PASSWORD: Joi.string().required(),
+        DATABASE_URL: Joi.string().required(),
+        NODE_ENV: Joi.string().valid(Environment.DEV, Environment.PROD).default(Environment.DEV),
       }),
-      validationOptions: {
-        allowUnknown: true,
-      },
+      validationOptions: { allowUnknown: true },
     }),
+    DatabaseModule,
   ],
   controllers: [AppController, PostsController],
   providers: [AppService, PostsService],

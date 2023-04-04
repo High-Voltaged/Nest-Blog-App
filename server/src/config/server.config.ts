@@ -1,9 +1,14 @@
-export default () => ({
+import { registerAs } from '@nestjs/config';
+
+export enum Environment {
+  DEV = 'development',
+  PROD = 'production',
+}
+
+export default registerAs('config', () => ({
   port: parseInt(process.env.PORT),
+  env: process.env.NODE_ENV,
   database: {
-    host: process.env.DATABASE_HOST,
-    port: process.env.DATABASE_PORT,
-    username: process.env.DATABASE_USERNAME,
-    password: process.env.DATABASE_PASSWORD,
+    url: process.env.DATABASE_URL,
   },
-});
+}));
