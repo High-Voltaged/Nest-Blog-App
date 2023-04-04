@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpCode, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -13,22 +13,31 @@ export class PostsService {
   ) {}
 
   create(createPostDto: CreatePostDto) {
-    return 'This action adds a new post';
+    const post = this.postsRepository.create(createPostDto);
+    return this.postsRepository.save(post);
   }
 
   findAll() {
     return this.postsRepository.find();
   }
 
-  findOne(id: number) {
-    return this.postsRepository.findOneBy({ id });
+  async findOne(id: number) {
+    const post = await this.postsRepository.findOneBy({ id });
+    if (!post) {
+      throw new NotFoundException(`The post with the id ${id} does not exist.`);
+    }
+    return post;
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+  async update(id: number, updatePostDto: UpdatePostDto) {
+    const post = await this.findOne(id);
+    this.postsRepository.merge(post, updatePostDto);
+    return this.postsRepository.save(post);
   }
 
-  remove(id: number) {
-    return this.postsRepository.delete(id);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(id: number) {
+    await this.findOne(id);
+    await this.postsRepository.delete(id);
   }
 }
