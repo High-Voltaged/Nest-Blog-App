@@ -1,14 +1,16 @@
-# Blog Application
+# Blog Application API
 
 ## Description
 
-A basic blog application, implemented with Nest.js
+A basic blog application API, implemented with Nest.js, Postgres & TypeORM.
 
-## Installation
+## Installation & Setup
 
 ```bash
 $ npm install
 ```
+
+Before running the app, create an `.env` file, filled with the data according to the `.env.example`.
 
 ## Running the app
 
