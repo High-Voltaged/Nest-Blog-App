@@ -26,9 +26,14 @@ const PostCard = ({ post, isGridView = false }: PropsType) => {
       px="8"
       py="5"
     >
-      <VStack alignItems="flex-start" spacing="4">
-        <Heading size="lg">{post.title}</Heading>
-        <Text fontSize="lg">{trim(post.content)}</Text>
+      <VStack alignItems="flex-start" h="100%" justifyContent="space-between" spacing="4">
+        <VStack alignItems="flex-start">
+          <Heading size="lg">{post.title}</Heading>
+          <Text fontSize="lg">{trim(post.content)}</Text>
+        </VStack>
+        <Text fontSize="lg" w="100%" fontWeight="600" textAlign="right">
+          {new Date(post.createdAt).toISOString().split('T')[0]}
+        </Text>
       </VStack>
     </Card>
   );
