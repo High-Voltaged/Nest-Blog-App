@@ -11,6 +11,7 @@ import { ConfigModule } from '@nestjs/config';
       validationSchema: Joi.object({
         PORT: Joi.number().default(3000),
         DATABASE_URL: Joi.string().required(),
+        CLIENT_URL: Joi.string().required(),
         NODE_ENV: Joi.string().valid(Environment.DEV, Environment.PROD).default(Environment.DEV),
       }),
       validationOptions: { allowUnknown: true },
