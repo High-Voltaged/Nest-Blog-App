@@ -1,9 +1,10 @@
-import { Heading, VStack } from '@chakra-ui/react';
+import { Button, Flex, Heading, useDisclosure, VStack } from '@chakra-ui/react';
 import Loader from '~/components/Loader/Loader';
 import NotFound from '~/components/NotFound/NotFound';
 import useCustomToast from '~/hooks/use-custom-toast';
 import { useGetCommentsQuery } from '~/store/api/comments-slice';
 import CommentCard from './CommentCard';
+import CreateCommentForm from './comments/CreateCommentForm';
 
 type PropsType = {
   postId: number;
@@ -11,6 +12,7 @@ type PropsType = {
 
 const CommentsList = ({ postId }: PropsType) => {
   const { data: comments, error, isLoading } = useGetCommentsQuery(postId);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { toast } = useCustomToast();
 
   if (isLoading) {
@@ -28,14 +30,18 @@ const CommentsList = ({ postId }: PropsType) => {
   }
 
   return (
-    <>
-      <VStack w="100%" alignItems="flex-start" px="20" py="4">
+    <VStack w="100%" alignItems="flex-start" px="20" py="4">
+      <Flex alignItems="center" justifyContent="space-between" w="100%">
         <Heading size="lg">Comments</Heading>
-        <VStack w="100%" spacing={3} alignItems="flex-start">
-          {commentCards}
-        </VStack>
+        <Button onClick={onOpen} colorScheme="blue">
+          Add a new comment
+        </Button>
+        <CreateCommentForm postId={postId} isOpen={isOpen} onClose={onClose} />
+      </Flex>
+      <VStack w="100%" spacing={3} alignItems="flex-start">
+        {commentCards}
       </VStack>
-    </>
+    </VStack>
   );
 };
 

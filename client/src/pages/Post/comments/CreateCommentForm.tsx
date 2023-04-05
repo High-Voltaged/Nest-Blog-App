@@ -1,22 +1,24 @@
 import { Button, FormControl, FormErrorMessage, FormLabel, Input, VStack } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import DrawerWrapper from '~/components/Drawer/DrawerWrapper';
-import { createSchema, TCreate } from '~/validation/post';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useRequestHandler from '~/hooks/use-request-handler';
-import { useCreatePostMutation } from '~/store/api/posts-slice';
+import { useCreateCommentMutation } from '~/store/api/comments-slice';
+import { TCreate } from '~/validation/comment';
+import { createSchema } from '~/validation/comment';
 
 type PropsType = {
   isOpen: boolean;
   onClose: () => void;
+  postId: number;
 };
 
-const CreatePostForm = ({ isOpen, onClose }: PropsType) => {
-  const [create, { isLoading }] = useCreatePostMutation();
+const CreateCommentForm = ({ isOpen, onClose, postId }: PropsType) => {
+  const [create, { isLoading }] = useCreateCommentMutation();
 
-  const { handler: createHandler } = useRequestHandler<TCreate>({
+  const { handler: createHandler } = useRequestHandler<TCreate & { postId: number }>({
     f: create,
-    successMsg: "You've successfully created a post",
+    successMsg: "You've successfully created a comment",
   });
 
   const {
@@ -29,19 +31,14 @@ const CreatePostForm = ({ isOpen, onClose }: PropsType) => {
   });
 
   const onSubmit = async (data: TCreate) => {
-    await createHandler(data);
+    await createHandler({ ...data, postId });
     reset();
   };
 
   return (
-    <DrawerWrapper title="Create a new post" isOpen={isOpen} onClose={onClose}>
+    <DrawerWrapper title="Create a new comment" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <VStack spacing="4">
-          <FormControl isInvalid={!!errors.title}>
-            <FormLabel htmlFor="title">Title</FormLabel>
-            <Input id="title" placeholder="Your title" {...register('title')} />
-            <FormErrorMessage>{errors.title && errors.title.message}</FormErrorMessage>
-          </FormControl>
           <FormControl isInvalid={!!errors.content}>
             <FormLabel htmlFor="content">Content</FormLabel>
             <Input id="content" placeholder="Your content" {...register('content')} />
@@ -56,4 +53,4 @@ const CreatePostForm = ({ isOpen, onClose }: PropsType) => {
   );
 };
 
-export default CreatePostForm;
+export default CreateCommentForm;
