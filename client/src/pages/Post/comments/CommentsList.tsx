@@ -4,7 +4,7 @@ import NotFound from '~/components/NotFound/NotFound';
 import useCustomToast from '~/hooks/use-custom-toast';
 import { useGetCommentsQuery } from '~/store/api/comments-slice';
 import CommentCard from './CommentCard';
-import CreateCommentForm from './comments/CreateCommentForm';
+import CreateCommentForm from './CreateCommentForm';
 
 type PropsType = {
   postId: number;

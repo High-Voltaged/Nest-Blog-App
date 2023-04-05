@@ -9,7 +9,7 @@ const useCustomToast = () => {
     (description: string, status: UseToastOptions['status']) => {
       createToast({
         description,
-        duration: 9000,
+        duration: 5000,
         isClosable: true,
         status,
       });

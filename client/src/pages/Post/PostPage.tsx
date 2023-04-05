@@ -5,7 +5,7 @@ import Loader from '~/components/Loader/Loader';
 import NotFound from '~/components/NotFound/NotFound';
 import { useGetPostQuery } from '~/store/api/posts-slice';
 import PostCard from '../Posts/PostCard';
-import CommentsList from './CommentsList';
+import CommentsList from './comments/CommentsList';
 import PostUpdateMenu from './PostUpdateMenu';
 
 const PostPage = () => {
