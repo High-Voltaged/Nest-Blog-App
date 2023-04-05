@@ -9,7 +9,7 @@ import { ConfigModule } from '@nestjs/config';
       load: [config],
       isGlobal: true,
       validationSchema: Joi.object({
-        PORT: Joi.number().default(3000),
+        PORT: Joi.number().default(8080),
         DATABASE_URL: Joi.string().required(),
         CLIENT_URL: Joi.string().required(),
         NODE_ENV: Joi.string().valid(Environment.DEV, Environment.PROD).default(Environment.DEV),
