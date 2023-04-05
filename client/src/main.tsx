@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import App from '~/App';
-import Loader from '~/components/Loader';
+import Loader from '~/components/Loader/Loader';
 import { persistor, store } from '~/store/store';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
