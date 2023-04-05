@@ -5,10 +5,10 @@ export const createSchema = z.object({
   content: z.string(),
 });
 
-export const updateeSchema = z.object({
+export const updateSchema = z.object({
   title: z.string().optional(),
-  content: z.string().email().optional(),
+  content: z.string().optional(),
 });
 
 export type TCreate = z.infer<typeof createSchema>;
-export type TUpdate = z.infer<typeof updateeSchema>;
+export type TUpdate = z.infer<typeof updateSchema>;

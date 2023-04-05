@@ -1,5 +1,5 @@
 import { Post, PostsParam, PostsResponse } from '~/types/post';
-import { TCreate } from '~/validation/post';
+import { TCreate, TUpdate } from '~/validation/post';
 import { apiSlice } from './api-slice';
 
 export const extendedApiSlice = apiSlice.injectEndpoints({
@@ -26,7 +26,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Post'],
     }),
-    updatePost: builder.mutation<Post, Post & { id: number }>({
+    updatePost: builder.mutation<Post, TUpdate & { id: number }>({
       query: ({ id, ...body }) => ({
         url: `/posts/${id}`,
         method: 'PATCH',
