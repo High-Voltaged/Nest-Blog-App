@@ -1,9 +1,9 @@
-import { Center, Text } from '@chakra-ui/react';
+import { Center, Heading } from '@chakra-ui/react';
 
 const NotFound = () => {
   return (
     <Center>
-      <Text>Nothing was found.</Text>
+      <Heading size="lg">Nothing was found.</Heading>
     </Center>
   );
 };

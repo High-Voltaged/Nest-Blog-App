@@ -16,7 +16,7 @@ const PostsList = () => {
   const pagesCount = data?.count ? Math.ceil(data?.count / postsLimit) : 0;
 
   const postCards = data?.posts.length ? (
-    data.posts.map((p) => <PostCard key={p.id} post={p} />)
+    data.posts.map((p) => <PostCard isGridView={true} key={p.id} post={p} />)
   ) : (
     <NotFound />
   );
