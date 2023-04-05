@@ -20,7 +20,7 @@ export class PostsService {
   }
 
   async findAll(filterPostsDto?: filterPostsDto) {
-    const { page, limit } = filterPostsDto;
+    const { page, limit } = filterPostsDto || {};
     const { skip, take } = getPageParams(page, limit);
     const [posts, count] = await this.postsRepository.findAndCount({
       skip,

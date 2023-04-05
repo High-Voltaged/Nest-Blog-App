@@ -16,6 +16,7 @@ export class Post {
   createdAt: Date;
 
   @OneToMany(() => Comment, (comment) => comment.post, {
+    nullable: true,
     cascade: true,
   })
   comments: Comment[];
