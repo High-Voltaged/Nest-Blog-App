@@ -1,4 +1,11 @@
-import { Button, FormControl, FormErrorMessage, FormLabel, Input, VStack } from '@chakra-ui/react';
+import {
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Textarea,
+  VStack,
+} from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import DrawerWrapper from '~/components/Drawer/DrawerWrapper';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -41,7 +48,7 @@ const CreateCommentForm = ({ isOpen, onClose, postId }: PropsType) => {
         <VStack spacing="4">
           <FormControl isInvalid={!!errors.content}>
             <FormLabel htmlFor="content">Content</FormLabel>
-            <Input id="content" placeholder="Your content" {...register('content')} />
+            <Textarea id="content" placeholder="Your content" {...register('content')} />
             <FormErrorMessage>{errors.content && errors.content.message}</FormErrorMessage>
           </FormControl>
           <Button type="submit" w="200px" colorScheme="blue" isLoading={isLoading}>

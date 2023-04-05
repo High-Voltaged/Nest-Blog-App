@@ -12,9 +12,13 @@ const PostCard = ({ post, isGridView = false }: PropsType) => {
 
   const onClick = !isGridView ? undefined : () => navigate(`/posts/${post.id}`);
 
+  const trim = (str: string) => {
+    return str.length < 50 || !isGridView ? str : str.slice(0, 50) + '...';
+  };
+
   return (
     <Card
-      w="100%"
+      w={isGridView ? 'auto' : '100%'}
       cursor="pointer"
       onClick={onClick}
       variant="outline"
@@ -24,7 +28,7 @@ const PostCard = ({ post, isGridView = false }: PropsType) => {
     >
       <VStack alignItems="flex-start" spacing="4">
         <Heading size="lg">{post.title}</Heading>
-        <Text fontSize="lg">{post.content}</Text>
+        <Text fontSize="lg">{trim(post.content)}</Text>
       </VStack>
     </Card>
   );
