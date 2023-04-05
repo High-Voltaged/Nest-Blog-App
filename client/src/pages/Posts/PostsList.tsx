@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Loader from '~/components/Loader/Loader';
 import NotFound from '~/components/NotFound/NotFound';
 import Pagination from '~/components/Pagination/Pagination';
+import useCustomToast from '~/hooks/use-custom-toast';
 import { useGetPostsQuery } from '~/store/api/posts-slice';
 import PostCard from './PostCard';
 
@@ -13,6 +14,8 @@ const PostsList = () => {
     limit: postsLimit,
     page,
   });
+  const { toast } = useCustomToast();
+
   const pagesCount = data?.count ? Math.ceil(data?.count / postsLimit) : 0;
 
   const postCards = data?.posts.length ? (
@@ -20,6 +23,10 @@ const PostsList = () => {
   ) : (
     <NotFound />
   );
+
+  if (error) {
+    toast((error as any).message || (error as any).data.message, 'error');
+  }
 
   return (
     <>

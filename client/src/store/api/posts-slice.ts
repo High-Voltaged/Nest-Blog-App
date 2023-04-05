@@ -1,4 +1,5 @@
 import { Post, PostsParam, PostsResponse } from '~/types/post';
+import { TCreate } from '~/validation/post';
 import { apiSlice } from './api-slice';
 
 export const extendedApiSlice = apiSlice.injectEndpoints({
@@ -15,9 +16,38 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
     }),
     getPost: builder.query<Post, number>({
       query: (id) => `/posts/${id}`,
-      providesTags: (_result, _error, arg) => [{ type: 'Post' as const, id: arg }],
+      providesTags: (_result, _error, arg) => [{ type: 'Post', id: arg }],
+    }),
+    createPost: builder.mutation<Post, TCreate>({
+      query: (body) => ({
+        url: '/posts',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Post'],
+    }),
+    updatePost: builder.mutation<Post, Post & { id: number }>({
+      query: ({ id, ...body }) => ({
+        url: `/posts/${id}`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: (_result, _error, arg) => [{ type: 'Post', id: arg.id }],
+    }),
+    deletePost: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `/posts/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Post'],
     }),
   }),
 });
 
-export const { useGetPostsQuery, useGetPostQuery } = extendedApiSlice;
+export const {
+  useGetPostsQuery,
+  useGetPostQuery,
+  useCreatePostMutation,
+  useUpdatePostMutation,
+  useDeletePostMutation,
+} = extendedApiSlice;

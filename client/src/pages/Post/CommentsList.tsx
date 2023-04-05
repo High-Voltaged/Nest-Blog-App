@@ -1,6 +1,7 @@
 import { Heading, VStack } from '@chakra-ui/react';
 import Loader from '~/components/Loader/Loader';
 import NotFound from '~/components/NotFound/NotFound';
+import useCustomToast from '~/hooks/use-custom-toast';
 import { useGetCommentsQuery } from '~/store/api/comments-slice';
 import CommentCard from './CommentCard';
 
@@ -10,6 +11,7 @@ type PropsType = {
 
 const CommentsList = ({ postId }: PropsType) => {
   const { data: comments, error, isLoading } = useGetCommentsQuery(postId);
+  const { toast } = useCustomToast();
 
   if (isLoading) {
     return <Loader isFullScreen={false} />;
@@ -20,6 +22,10 @@ const CommentsList = ({ postId }: PropsType) => {
   ) : (
     <NotFound />
   );
+
+  if (error) {
+    toast((error as any).message || (error as any).data.message, 'error');
+  }
 
   return (
     <>
