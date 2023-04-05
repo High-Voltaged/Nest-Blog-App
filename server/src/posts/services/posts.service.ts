@@ -1,4 +1,4 @@
-import { HttpCode, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { getPageParams } from 'src/utils/pagination';
 import { Repository } from 'typeorm';
@@ -44,7 +44,6 @@ export class PostsService {
     return this.postsRepository.save(post);
   }
 
-  @HttpCode(HttpStatus.NO_CONTENT)
   async remove(id: number) {
     await this.findOne(id);
     await this.postsRepository.delete(id);
