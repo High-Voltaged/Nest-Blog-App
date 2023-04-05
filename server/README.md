@@ -10,9 +10,12 @@ A basic blog application API, implemented with Nest.js, Postgres & TypeORM.
 $ npm install
 ```
 
-Before running the app, create an `.env` file, filled with the data according to the `.env.example`.
-
 ## Running the app
+
+Before running the app:
+
+- Create an `.env` file, filled with the data according to the `.env.example`.
+- Make sure to specify an existing username with a correct password, and an existing database name in the `DATABASE_URL` env.
 
 ```bash
 # development
